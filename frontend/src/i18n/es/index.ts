@@ -418,22 +418,6 @@ Las categorías de clasificación son:
       },
       shareDialog: {
         title: 'Compartir',
-        off: {
-          content:
-            'La compartición de enlaces está desactivada, por lo que solo tú puedes acceder a este bot a través de su URL.',
-        },
-        on: {
-          content:
-            'La compartición de enlaces está activada, por lo que TODOS los usuarios pueden usar este enlace para conversar.',
-        },
-      },
-      error: {
-        notSupportedFile: 'Este archivo no es compatible.',
-        duplicatedFile: 'Un archivo con el mismo nombre ya ha sido subido.',
-        failDeleteApi: 'No se pudo eliminar la API.',
-      },
-      shareDialog: {
-        title: 'Compartir',
         switchLabel: 'Compartir este Bot',
         label: {
           selectShare: 'Compartir con',

@@ -1,10 +1,8 @@
 import React, {
   useCallback,
-  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
-  useState,
 } from 'react';
 import { BaseProps } from '../@types/common';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -13,20 +11,13 @@ import ButtonIcon from './ButtonIcon';
 import {
   PiArrowRight,
   PiChartLine,
-  PiChat,
   PiChatCenteredDotsDuotone,
-  PiCheck,
-  PiCompass,
-  PiListBullets,
   PiNotePencil,
-  PiPencilLine,
   PiPlugs,
   PiPresentationChart,
   PiRobot,
-  PiTrash,
   PiX,
 } from 'react-icons/pi';
-import LazyOutputText from './LazyOutputText';
 import { ConversationMeta } from '../@types/conversation';
 import { BotListItem } from '../@types/bot';
 import { isMobile } from 'react-device-detect';
@@ -58,179 +49,26 @@ type Props = BaseProps & {
   onClickDrawerOptions: () => void;
 };
 
-type ItemProps = BaseProps & {
-  label: string;
-  conversationId: string;
-  generatedTitle?: boolean;
-  updateTitle: (conversationId: string, title: string) => Promise<void>;
-  onClick: () => void;
-  onDelete: () => void;
-};
 
-const Item: React.FC<ItemProps> = (props) => {
-  const { pathname } = useLocation();
-  const { conversationId: pathParam } = useParams();
-  const { conversationId } = useChat();
-  const [tempLabel, setTempLabel] = useState('');
-  const [editing, setEditing] = useState(false);
-
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const active = useMemo<boolean>(() => {
-    return (
-      pathParam === props.conversationId ||
-      ((pathname === '/' || pathname.startsWith('/bot/')) &&
-        conversationId == props.conversationId)
-    );
-  }, [conversationId, pathParam, pathname, props.conversationId]);
-
-  const onClickEdit = useCallback(() => {
-    setEditing(true);
-    setTempLabel(props.label);
-  }, [props.label]);
-
-  const onClickUpdate = useCallback(() => {
-    props.updateTitle(props.conversationId, tempLabel).then(() => {
-      setEditing(false);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tempLabel, props.conversationId, props.updateTitle]);
-
-  const onClickDelete = useCallback(() => {
-    props.onDelete();
-  }, [props]);
-
-  useLayoutEffect(() => {
-    if (editing) {
-      inputRef.current?.focus();
-    }
-  }, [editing]);
-
-  useLayoutEffect(() => {
-    if (editing) {
-      const listener = (e: DocumentEventMap['keypress']) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-          e.preventDefault();
-
-          // dispatch 処理の中で Title の更新を行う（同期を取るため）
-          setTempLabel((newLabel) => {
-            props.updateTitle(props.conversationId, newLabel).then(() => {
-              setEditing(false);
-            });
-            return newLabel;
-          });
-        }
-      };
-      inputRef.current?.addEventListener('keypress', listener);
-
-      inputRef.current?.focus();
-
-      return () => {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        inputRef.current?.removeEventListener('keypress', listener);
-      };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editing]);
-
-  return (
-    <DrawerItem
-      isActive={active}
-      isBlur={!editing}
-      to={`/${props.conversationId}`}
-      onClick={props.onClick}
-      icon={<PiChat />}
-      labelComponent={
-        <>
-          {editing ? (
-            <input
-              ref={inputRef}
-              type="text"
-              className="w-full bg-transparent"
-              value={tempLabel}
-              onChange={(e) => {
-                setTempLabel(e.target.value);
-              }}
-            />
-          ) : (
-            <>
-              {props.generatedTitle ? (
-                <LazyOutputText text={props.label} />
-              ) : (
-                <>{props.label}</>
-              )}
-            </>
-          )}
-        </>
-      }
-      actionComponent={
-        <>
-          {active && !editing && (
-            <>
-              <ButtonIcon className="text-base" onClick={onClickEdit}>
-                <PiPencilLine />
-              </ButtonIcon>
-
-              <ButtonIcon className="text-base" onClick={onClickDelete}>
-                <PiTrash />
-              </ButtonIcon>
-            </>
-          )}
-          {editing && (
-            <>
-              <ButtonIcon className="text-base" onClick={onClickUpdate}>
-                <PiCheck />
-              </ButtonIcon>
-
-              <ButtonIcon
-                className="text-base"
-                onClick={() => {
-                  setEditing(false);
-                }}>
-                <PiX />
-              </ButtonIcon>
-            </>
-          )}
-        </>
-      }
-    />
-  );
-};
 
 const Drawer: React.FC<Props> = (props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { getPageLabel } = usePageLabel();
   const { opened, switchOpen, drawerOptions } = useDrawer();
-  const { conversations, starredBots, recentlyUsedUnstarredBots } = props;
+  const { starredBots, recentlyUsedUnstarredBots } = props;
 
   const location = useLocation();
 
-  const [prevConversations, setPrevConversations] =
-    useState<typeof conversations>();
-  const [generateTitleIndex, setGenerateTitleIndex] = useState(-1);
+
+
 
   const { newChat, conversationId } = useChat();
   const { botId } = useParams();
 
-  useEffect(() => {
-    setPrevConversations(conversations);
-  }, [conversations]);
 
-  useEffect(() => {
-    // 新規チャットの場合はTitleをLazy表示にする
-    if (!conversations || !prevConversations) {
-      return;
-    }
-    if (conversations.length > prevConversations?.length) {
-      setGenerateTitleIndex(
-        conversations?.findIndex(
-          (c) =>
-            (prevConversations?.findIndex((pc) => c.id === pc.id) ?? -1) < 0
-        ) ?? -1
-      );
-    }
-  }, [conversations, prevConversations]);
+
+
 
   const onClickNewChat = useCallback(() => {
     newChat();
@@ -402,51 +240,7 @@ const Drawer: React.FC<Props> = (props) => {
                 )}
               </ExpandableDrawerGroup>
 
-              {/* Hidden: Recent chats/conversation history section
-              <ExpandableDrawerGroup
-                label={t('app.conversationHistory')}
-                className={twMerge(
-                  'border-t bg-aws-squid-ink-light pt-1 dark:bg-aws-squid-ink-dark',
-                  props.isAdmin ? 'mb-20' : 'mb-10'
-                )}>
-                {conversations === undefined && (
-                  <div className="flex flex-col gap-2 p-2">
-                    <Skeleton className="h-10 w-full bg-aws-sea-blue-light/50 dark:bg-aws-sea-blue-dark/50" />
-                    <Skeleton className="h-10 w-full bg-aws-sea-blue-light/50 dark:bg-aws-sea-blue-dark/50" />
-                    <Skeleton className="h-10 w-full bg-aws-sea-blue-light/50 dark:bg-aws-sea-blue-dark/50" />
-                    <Skeleton className="h-10 w-full bg-aws-sea-blue-light/50 dark:bg-aws-sea-blue-dark/50" />
-                    <Skeleton className="h-10 w-full bg-aws-sea-blue-light/50 dark:bg-aws-sea-blue-dark/50" />
-                  </div>
-                )}
-                {conversations
-                  ?.slice(0, drawerOptions.displayCount.conversationHistory)
-                  .map((conversation, idx) => (
-                    <Item
-                      key={idx}
-                      className="grow"
-                      label={conversation.title}
-                      conversationId={conversation.id}
-                      generatedTitle={idx === generateTitleIndex}
-                      updateTitle={props.updateConversationTitle}
-                      onClick={closeSmallDrawer}
-                      onDelete={() => props.onDeleteConversation(conversation)}
-                    />
-                  ))}
 
-                {conversations && (
-                  <Button
-                    text
-                    rightIcon={<PiArrowRight />}
-                    className="w-full"
-                    onClick={() => {
-                      navigate('/conversations');
-                      closeSmallDrawer();
-                    }}>
-                    {t('bot.button.viewAll')}
-                  </Button>
-                )}
-              </ExpandableDrawerGroup>
-              */}
             </>
           )}
 
