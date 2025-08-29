@@ -13,12 +13,34 @@ const translation = {
       conversationHistory: 'Historial',
       chatWaitingSymbol: '▍',
       adminConsoles: 'Solo Administrador',
+      backChat: 'Volver al Chat',
+      userGroups: 'Grupos de Usuarios',
     },
     model: {
+      'claude-v4-opus': {
+        label: 'Claude 4 (Opus)',
+        description:
+          'Modelo híbrido de razonamiento potente para tareas complejas, codificación y agentes de IA con ventana de contexto de 200K tokens.',
+      },
+      'claude-v4.1-opus': {
+        label: 'Claude 4.1 (Opus)',
+        description:
+          'La versión más reciente del modelo Claude más potente con capacidades de razonamiento mejoradas.',
+      },
+      'claude-v4-sonnet': {
+        label: 'Claude 4 (Sonnet)',
+        description:
+          'Modelo híbrido de razonamiento equilibrado optimizado para eficiencia a escala con ventana de contexto de 200K tokens.',
+      },
       'claude-v3-haiku': {
         label: 'Claude 3 (Haiku)',
         description:
           'Versión anterior optimizada para velocidad y compacidad, brindando respuesta casi instantánea.',
+      },
+      'claude-v3.5-haiku': {
+        label: 'Claude 3.5 (Haiku)',
+        description:
+          'La última versión, con una capacidad de respuesta aún más rápida y mejor rendimiento respecto a Haiku 3.',
       },
       'claude-v3.5-sonnet': {
         label: 'Claude 3.5 (Sonnet) v1',
@@ -30,28 +52,79 @@ const translation = {
         description:
           'La última versión de Claude 3.5. Un modelo mejorado que supera a la v1 en precisión y rendimiento.',
       },
-      'claude-v3.5-haiku': {
-        label: 'Claude 3.5 (Haiku)',
+      'claude-v3.7-sonnet': {
+        label: 'Claude 3.7 Sonnet',
         description:
-          'La última versión, con una capacidad de respuesta aún más rápida y mejor rendimiento respecto a Haiku 3.',
-      },
-      'claude-v4.1-opus': {
-        label: 'Claude 4.1 (Opus)',
-        description:
-          'La versión más reciente del modelo Claude más potente con capacidades de razonamiento mejoradas.',
+          'Modelo híbrido de razonamiento que equilibra respuestas rápidas y capacidades analíticas profundas.',
       },
       'claude-v3-opus': {
         label: 'Claude 3 (Opus)',
         description: 'Modelo potente para tareas altamente complejas.',
       },
+      'amazon-nova-pro': {
+        label: 'Amazon Nova Pro',
+        description:
+          'Un modelo multimodal altamente capaz con la mejor combinación de precisión, velocidad y costo para una amplia gama de tareas.',
+      },
+      'amazon-nova-lite': {
+        label: 'Amazon Nova Lite',
+        description:
+          'Un modelo multimodal de muy bajo costo que es extremadamente rápido para procesar entradas de imagen, video y texto.',
+      },
+      'amazon-nova-micro': {
+        label: 'Amazon Nova Micro',
+        description:
+          'Un modelo solo de texto que ofrece las respuestas de menor latencia en la familia de modelos Amazon Nova a un costo muy bajo.',
+      },
+      'deepseek-r1': {
+        label: 'DeepSeek R1',
+        description:
+          'Modelo de razonamiento de vanguardia optimizado para razonamiento general, matemáticas, ciencias y generación de código. Soporta idiomas inglés y chino.',
+      },
+      'llama3-3-70b-instruct': {
+        label: 'Meta Llama 3.3 70B Instruct',
+        description:
+          'El último modelo Llama 3 que ofrece rendimiento a la par del modelo 405B a menor costo con excelentes capacidades de razonamiento y seguimiento de instrucciones.',
+      },
+      'llama3-2-1b-instruct': {
+        label: 'Meta Llama 3.2 1B Instruct',
+        description:
+          'Modelo ligero optimizado para dispositivos edge con procesamiento eficiente en el dispositivo para gestión de información personal y recuperación de conocimiento multilingüe.',
+      },
+      'llama3-2-3b-instruct': {
+        label: 'Meta Llama 3.2 3B Instruct',
+        description:
+          'Modelo compacto que ofrece generación de texto, resumen y análisis de sentimientos con baja latencia, ideal para aplicaciones de IA móvil.',
+      },
+      'llama3-2-11b-instruct': {
+        label: 'Meta Llama 3.2 11B Instruct',
+        description:
+          'Modelo multimodal que sobresale en comprensión de imágenes y razonamiento visual para subtitulado de imágenes, respuesta a preguntas visuales y procesamiento de documentos.',
+      },
+      'llama3-2-90b-instruct': {
+        label: 'Meta Llama 3.2 90B Instruct',
+        description:
+          'Modelo multimodal grande con capacidades avanzadas de comprensión de imágenes y razonamiento visual para aplicaciones sofisticadas de inteligencia visual.',
+      },
       'mistral-7b-instruct': {
         label: 'Mistral 7B',
+        description:
+          'Soporta tareas de generación de texto en inglés con capacidades naturales de codificación',
       },
       'mixtral-8x7b-instruct': {
         label: 'Mistral-8x7B',
+        description:
+          'Un modelo popular y de alta calidad, Mixture-of-Experts (MoE) disperso, ideal para resumen de texto, preguntas y respuestas, clasificación de texto, completado de texto y generación de código.',
       },
       'mistral-large': {
         label: 'Mistral Grande',
+        description:
+          'Ideal para tareas complejas que requieren capacidades de razonamiento sustanciales, o aquellas altamente especializadas, como Generación de Texto Sintético o Generación de Código.',
+      },
+      'mistral-large-2': {
+        label: 'Mistral Grande 2',
+        description:
+          'LLM avanzado que soporta docenas de idiomas y más de 80 lenguajes de programación, con capacidades agénticas de clase mundial incluyendo llamadas de función nativas, salida JSON y razonamiento.',
       },
     },
     agent: {
@@ -121,6 +194,7 @@ const translation = {
         notAvailable: 'Este bot NO está disponible.',
         noBots: 'No hay Bots.',
         noBotsRecentlyUsed: 'No hay Bots Compartidos Usados Recientemente.',
+        noStarredBots: 'No hay Bots Favoritos.',
         retrievingKnowledge: '[Recuperando Conocimiento...]',
         dndFileUpload:
           'Puedes subir archivos arrastrándolos y soltándolos.\nArchivos soportados: {{fileExtensions}}',
@@ -149,6 +223,8 @@ const translation = {
         edit: 'Editar',
         copyLink: 'Copiar Enlace',
         copiedLink: 'Enlace Copiado',
+        markAsEssential: 'Marcar como Esencial',
+        removeEssential: 'Quitar Estado Esencial',
       },
       help: {
         overview:
@@ -218,6 +294,11 @@ Las categorías de clasificación son:
       },
       edit: {
         pageTitle: 'Editar Mi Bot',
+      },
+      my: {
+        label: {
+          pageTitle: 'Mis Bots',
+        },
       },
 
       item: {
@@ -328,6 +409,8 @@ Las categorías de clasificación son:
         copied: 'Copiado',
         instructionsSamples: 'Ejemplos',
         chooseFiles: 'Elegir archivos',
+        viewAll: 'Ver Todo',
+        removeFromRecent: 'Eliminar del Historial',
       },
       deleteDialog: {
         title: '¿Eliminar?',
@@ -348,6 +431,66 @@ Las categorías de clasificación son:
         notSupportedFile: 'Este archivo no es compatible.',
         duplicatedFile: 'Un archivo con el mismo nombre ya ha sido subido.',
         failDeleteApi: 'No se pudo eliminar la API.',
+      },
+      shareDialog: {
+        title: 'Compartir',
+        switchLabel: 'Compartir este Bot',
+        label: {
+          selectShare: 'Compartir con',
+          all: 'TODOS los Usuarios',
+          partial: 'Usuarios Seleccionados',
+          search: 'Buscar Usuarios y Grupos',
+          noSearchResults: 'No se encontraron resultados de búsqueda',
+          memberManagement: 'Editar Miembros',
+          sharing: {
+            not_shared: 'No compartido con ningún grupo o usuario',
+            shared_only_users: 'Compartido con {{count}} usuario',
+            shared_only_users_plural: 'Compartido con {{count}} usuarios',
+            shared_only_groups: 'Compartido con {{count}} grupo',
+            shared_only_groups_plural: 'Compartido con {{count}} grupos',
+            shared_both:
+              'Compartido con {{count}} grupo y {{count}} usuario ',
+            shared_both_user_plural:
+              'Compartido con {{count}} grupo y {{count}} usuarios',
+            shared_both_group_plural:
+              'Compartido con {{count}} grupos y {{count}} usuario',
+            shared_both_plural:
+              'Compartido con {{count}} grupos y {{count}} usuarios ',
+          },
+          user: 'Usuario',
+          group: 'Grupo',
+        },
+        off: {
+          content: 'Este bot es privado y solo tú tienes acceso a él.',
+        },
+        on: {
+          content:
+            'Este bot es compartido y accesible para otros usuarios. Los usuarios compartidos pueden encontrar y usar este bot a través de la página <Link>Descubrir Bot</Link>.',
+          linkDescription:
+            'También puedes chatear con el bot usando este enlace compartido.',
+        },
+        button: {
+          manage: 'Gestionar',
+          removeAccess: 'Eliminar Acceso',
+          cancelRemoval: 'Cancelar Eliminación',
+          cancelAddition: 'Cancelar Adición',
+        },
+      },
+      error: {
+        notSupportedFile: 'Este archivo no es compatible.',
+        duplicatedFile: 'Un archivo con el mismo nombre ya ha sido subido.',
+        failDeleteApi: 'No se pudo eliminar la API.',
+      },
+      activeModels: {
+        title: 'Activación de Modelo',
+        description: 'Configura qué modelos de IA pueden usarse con este bot.',
+      },
+      promptCaching: {
+        title: 'Caché de Prompts',
+        promptCachingEnabled: {
+          title: 'Usar caché de prompts si el modelo lo soporta.',
+          description: 'Si está habilitado, puede reducir el costo y la latencia de conversaciones repetidas con este bot.',
+        },
       },
     },
     admin: {
@@ -380,7 +523,7 @@ Las categorías de clasificación son:
       botManagement: {
         label: {
           pageTitle: 'Gestión de Bots',
-          sharedUrl: 'URL del Bot Compartido',
+          sharedUrl: 'URL del Bot',
           apiSettings: 'Configuración de Publicación de API',
           noKnowledge: 'Este bot no tiene Conocimiento.',
           notPublishApi: 'La API de este bot no está publicada.',
@@ -396,6 +539,9 @@ Las categorías de clasificación son:
             'El cliente puede realizar <Bold>{{limit}}</Bold> solicitudes concurrentes a la API.',
           requestsLimit:
             'Puedes hacer <Bold>{{limit}}</Bold> solicitudes <Bold>{{period}}</Bold>.',
+          sharedAllUsers: 'Compartido con TODOS los Usuarios',
+          privateBot: 'Este bot no está compartido.',
+          owner: 'Propietario',
         },
         alert: {
           noApiKeys: {
@@ -414,6 +560,11 @@ Las categorías de clasificación son:
     deleteDialog: {
       title: '¿Eliminar?',
       content: '¿Estás seguro de eliminar <Bold>{{title}}</Bold>?',
+      pinnedBotError: {
+        title: 'No se puede Eliminar',
+        content:
+          'Este bot está marcado como esencial. El estado esencial puede ser cambiado por el administrador.',
+      },
     },
     clearDialog: {
       title: '¿Eliminar TODO?',
@@ -421,6 +572,59 @@ Las categorías de clasificación son:
     },
     languageDialog: {
       title: 'Cambiar idioma',
+    },
+    drawerOptionsDialog: {
+      title: 'Opciones del Menú Lateral',
+      label: {
+        displayCount: 'Cantidad a Mostrar',
+      },
+    },
+    discover: {
+      pageTitle: 'Descubrir Bot',
+      description:
+        'Ver y buscar bots que son públicos o permitidos para tu acceso.',
+      search: {
+        placeholder: 'Buscar Bots',
+        searching: 'Buscando...',
+        results: 'Se encontraron {{count}} resultados para "{{query}}"',
+        noResults: 'No se encontraron resultados para "{{query}}"',
+        tryDifferent: 'Prueba con palabras clave diferentes.',
+        backToHome: 'Volver al Inicio',
+      },
+      essential: {
+        label: 'Esencial',
+        description:
+          'Estos bots son seleccionados oficialmente por los administradores. Úsalos activamente para mejorar tu eficiencia de trabajo como parte de las operaciones estándar.',
+        noEssentialBotsMessage: {
+          title: 'No hay Bots Esenciales',
+          content: `La sección Esencial está oculta para usuarios no administradores ya que no hay bots Esenciales.<br/>
+          Los bots compartidos con Todos los Usuarios pueden marcarse como Esenciales.<br/>
+          Usa el menú del bot en las vistas de Chat, Mis Bots, Bots Favoritos o Bots Usados Recientemente para marcar un bot como Esencial.<br/>
+          Haz clic en el botón <MenuButton/> en estas vistas para acceder al menú.`,
+        },
+      },
+      trending: {
+        label: 'Tendencia',
+        description: 'Bots más populares.',
+      },
+      discover: {
+        label: 'Descubrir',
+        description: 'Muestra aleatoria de bots.',
+      },
+    },
+    conversationHistory: {
+      pageTitle: 'Historial de Chat',
+      label: {
+        noConversations: 'No hay Historial de Chat',
+      },
+      searchConversation: {
+        placeholder: 'Buscar conversaciones...',
+        searching: 'Buscando...',
+        results: 'Se encontraron {{count}} chats que coinciden con "{{query}}"',
+        noResults: 'No hay chats que coincidan con "{{query}}"',
+        tryDifferentKeywords: 'Prueba con palabras clave diferentes',
+        resultsCount: '{{count}} resultados encontrados',
+      },
     },
     feedbackDialog: {
       title: 'Retroalimentación',
@@ -445,8 +649,9 @@ Las categorías de clasificación son:
     },
     button: {
       newChat: 'Nuevo Chat',
+      backToConversationHistory: 'Volver al Historial de Chat',
       botConsole: 'Consola de Bot',
-      botAnalytics: 'Analíticas de Bot',
+      botAnalytics: 'Analíticas de Bot Compartido',
       apiManagement: 'Gestión de API',
       userUsages: 'Usos de Usuario',
       SaveAndSubmit: 'Guardar y Enviar',
@@ -464,7 +669,10 @@ Las categorías de clasificación son:
       signOut: 'Cerrar sesión',
       close: 'Cerrar',
       add: 'Agregar',
-      continue: 'Continuar generando',
+      continue: 'Continuar Generando',
+      botManagement: 'Gestión de Bots',
+      mode: 'Modo',
+      drawerOption: 'Opciones del Menú Lateral',
     },
     input: {
       hint: {
@@ -674,6 +882,19 @@ Las categorías de clasificación son:
           'El tamaño de cada documento no debe superar {{maxSize}}.',
         fileCountExceeded: 'No se pudo subir más de {{maxCount}} archivos.',
       },
+      cannotAccessBot: 'No se puede acceder a este bot. Redirigido a Nuevo Chat.',
+      share: {
+        markedEssential: {
+          title: 'No se puede Cambiar la Configuración de Compartir',
+          content:
+            'Este bot está marcado como Esencial por el administrador. Los bots Esenciales deben ser compartidos con todos los usuarios.',
+        },
+        publication: {
+          title: 'No se puede Cambiar la Configuración de Compartir',
+          content:
+            'Este bot está publicado como API por el administrador. Las API publicadas deben ser compartidas con todos los usuarios.',
+        },
+      },
     },
     validation: {
       title: 'Error de Validación',
@@ -693,6 +914,13 @@ Las categorías de clasificación son:
       quickStarter: {
         message:
           'Por favor, introduce tanto el Título como el Ejemplo de Conversación.',
+      },
+      required: '{{key}} es requerido',
+      number: {
+        greaterThen: '{{key}} debe ser mayor que {{value}} ',
+      },
+      maxBudgetTokens: {
+        message: 'El maxBudgetToken no puede exceder los maxTokens {{size}}',
       },
     },
     helper: {
@@ -743,6 +971,14 @@ Las categorías de clasificación son:
           label: 'Relevancia',
           hint: 'Valida si las respuestas del modelo son relevantes para la consulta del usuario y bloquea las respuestas que estén por debajo del umbral de relevancia definido. 0: no bloquea nada, 0.99: bloquea casi todo',
         },
+      },
+    },
+    reasoning: {
+      button: {
+        label: 'Razonamiento',
+      },
+      card: {
+        label: 'Proceso de Razonamiento',
       },
     },
   },

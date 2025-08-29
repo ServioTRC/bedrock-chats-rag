@@ -295,6 +295,7 @@ const Drawer: React.FC<Props> = (props) => {
                 onClick={onClickNewChat}
                 labelComponent={t('button.newChat')}
               />
+              {/* Hidden: My Bots and Discover Bot buttons
               <DrawerItem
                 isActive={false}
                 icon={<PiListBullets />}
@@ -309,6 +310,7 @@ const Drawer: React.FC<Props> = (props) => {
                 labelComponent={getPageLabel('/bot/discover')}
                 onClick={closeSmallDrawer}
               />
+              */}
 
               <ExpandableDrawerGroup
                 label={t('app.starredBots')}
@@ -400,6 +402,7 @@ const Drawer: React.FC<Props> = (props) => {
                 )}
               </ExpandableDrawerGroup>
 
+              {/* Hidden: Recent chats/conversation history section
               <ExpandableDrawerGroup
                 label={t('app.conversationHistory')}
                 className={twMerge(
@@ -443,6 +446,7 @@ const Drawer: React.FC<Props> = (props) => {
                   </Button>
                 )}
               </ExpandableDrawerGroup>
+              */}
             </>
           )}
 

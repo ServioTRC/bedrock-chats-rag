@@ -113,7 +113,8 @@ const i18n = i18next
   .use(detector)
   .init({
     resources,
-    fallbackLng: 'en',
+    lng: 'es', // Set Spanish as default language
+    fallbackLng: 'es', // Set Spanish as fallback language
     interpolation: {
       escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
     },
